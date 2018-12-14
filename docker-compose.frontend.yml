@@ -1,0 +1,24 @@
+version: '3.0'
+services:
+  frontend:
+    build: universal-boilerplate
+    volumes:
+      - ./universal-boilerplate:/frontend
+    ports:
+      - 3000:3000
+    environment:
+      - API_HOST=local.magento
+      - NODE_ENV=production
+    extra_hosts:
+      - local.magento:127.0.0.1
+  mongodb:
+      image: mongo:latest
+      container_name: "mongodb"
+      environment:
+        - MONGO_DATA_DIR=/data/db
+        - MONGO_LOG_DIR=/dev/null
+      volumes:
+        - ../data/db:/data/db
+      ports:
+          - 27017:27017
+      command: mongod --smallfiles --logpath=/dev/null # --quiet
